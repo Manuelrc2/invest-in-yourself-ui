@@ -1,9 +1,7 @@
-import LeftPanel from "./components/LeftPanel";
-
-const tabs = ["Daily check in", "Task's schedule"];
+import AppView from "./components/AppView";
 
 function App() {
-  return <LeftPanel tabs={tabs} />;
+  return <AppView />;
 }
 
 export default App;
