@@ -1,6 +1,9 @@
-import { Box, Button, Grid } from "@mui/material";
+import { Box, Button, Divider, Grid, Typography } from "@mui/material";
 import { FC } from "react";
-import { Tab } from "./AppView";
+import { Tab } from "../views/AppView";
+import Logout from "./auth/Logout";
+import { useAuth0 } from "@auth0/auth0-react";
+import Profile from "./Profile";
 
 type LeftPanelProps = {
   tabs: Tab[];
@@ -9,33 +12,36 @@ type LeftPanelProps = {
 };
 
 const LeftPanel: FC<LeftPanelProps> = ({ tabs, tabChosen, setTabChosen }) => {
+  const { user } = useAuth0();
   return (
     <Grid
       container
       flexDirection="column"
       alignItems="center"
-      borderRadius={10}
-      sx={{ backgroundColor: "black" }}
-      md={2}
+      borderRadius={2}
+      sx={{ backgroundColor: "#E5E5E5" }}
+      height="98vh"
     >
-      <Grid item height="10vh" width="10vh" borderRadius={10} mt="4vh">
-        <img
-          object-fit="cover"
-          width="100%"
-          src="https://static.vecteezy.com/system/resources/previews/008/442/086/non_2x/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg"
-        />
+      <Grid item mt="4vh" sx={{ backgroundColor: "E5E5E5" }}>
+        <Profile user={user} />
       </Grid>
-      <Grid item borderRadius={1} mt="4vh" mb="4vh" padding="4vh">
-        {tabs.map((tab) => (
+      <Grid item mt="4vh" mb="4vh">
+        {tabs.map((tab, index) => (
           <Box>
             <Button
-              sx={{ color: tab.id === tabChosen?.id ? "grey" : "white" }}
+              sx={{ color: tab.id === tabChosen?.id ? "white" : "black" }}
               onClick={() => setTabChosen(tab)}
             >
-              {tab.name}
+              <Typography fontFamily="courier">{tab.name}</Typography>
             </Button>
+            {index !== tabs.length - 1 && (
+              <Divider sx={{ backgroundColor: "grey" }} />
+            )}
           </Box>
         ))}
+      </Grid>
+      <Grid item position="absolute" bottom="2vh">
+        <Logout />
       </Grid>
     </Grid>
   );
